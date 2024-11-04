@@ -1,0 +1,23 @@
+.user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.user-info .username {
+    font-weight: bold;
+}
+.logout-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.overdue {
+    background-color: #f8d7da;
+    color: #721c24;
+}

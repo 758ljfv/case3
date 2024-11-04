@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление задачами</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+
+</head>
+
+<body>
+<div id="task-app" class="container mt-5">
+    <div id="header" class="b-header d-flex justify-content-between align-items-center mb-4">
+        <nav>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/tasks" class="nav-link">Управление задачами</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="user-info" v-if="user">
+            <span class="username">Привет, {{ user.username }}!</span>
+            <button @click="logout" class="btn btn-danger btn-sm ml-2">Выйти</button>
+        </div>
+    </div>
+
+    <div id="app" class="mt-5">
+        <h1 class="text-center mb-4">Управление задачами</h1>
+        <div class="task-form">
+            <form @submit.prevent="isEditing ? updateTask() : addTask()" v-if="user">
+                <div class="form-group">
+                    <label for="task-name">Название задачи</label>
+                    <input id="task-name" type="text" class="form-control" v-model="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Описание задачи</label>
+                    <textarea id="description" class="form-control" v-model="description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="dueDate">Дата выполнения</label>
+                    <input id="dueDate" type="datetime-local" class="form-control" v-model="dueDate" required>
+                </div>
+                <button type="submit" class="btn btn-primary">{{ isEditing ? 'Обновить задачу' : 'Добавить задачу' }}</button>
+                <button type="button" v-if="isEditing" @click="cancelEdit" class="btn btn-secondary ml-2">Отменить</button>
+            </form>
+        </div>
+
+        <h2 class="mt-5" v-if="tasks.length > 0">Список задач</h2>
+        <ul class="list-group task-list" v-if="tasks.length > 0">
+            <li class="list-group-item" v-for="(task, index) in tasks" :key="index">
+                <span>{{ task.title }} - {{ formatDueDate(task.dueDate) }}</span>
+                <div>
+                    <button class="btn btn-warning btn-sm" @click="editTask(task)">Редактировать</button>
+                    <button class="btn btn-danger btn-sm" @click="deleteTask(task._id)">Удалить</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="/assets/js/app.js"></script>
+</body>
+
+</html>
